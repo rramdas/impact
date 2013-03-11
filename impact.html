@@ -1,0 +1,151 @@
+<head>
+  <script src="client/lib/elastic.min.js"></script>
+  <script src="client/lib/elastic-jquery-client.min.js"></script>
+  <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+  <script type="text/javascript">
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+    </script>
+  <title>impact</title>
+</head>
+
+<body>
+  {{renderPage}}
+</body>
+
+<template name="index">
+  {{> layout }}
+</template>
+
+<template name="layout2">
+ {{>nav}}
+ {{>snippets}} 
+</template>
+
+<template name="search_form">
+  <form class="navbar-search pull-right">
+    <input type="text" class="search-query" placeholder="Search">
+  </form>
+</template>
+
+<template name="search_results">
+{{> snippets }}  
+</template>
+
+<template name="nav">
+   <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/snippets">Impact</a>
+          <div class="nav-collapse collapse pull-right">
+            <ul class="nav">
+              <li class="">
+              <a href="/" >New Paste</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+          {{> search_form}}
+        </div>
+      </div>
+    </div>  
+</template>
+
+<template name="layout">
+    {{> nav}}
+    <div class="container">
+       <div class="alert alert-block">
+        <h4>Impact</h4>
+        Share your code snippets easily with others. Beware the power of Impact.... 
+       </div>
+        {{> snippet_form }}
+       </div>
+    </div> <!-- /container -->
+</template>
+
+
+<template name="snippet_form">
+    <label class="checkbox inline">
+     <input type="checkbox" id="inlineCheckbox1" value="option1"> Private
+    </label>
+
+    <select class="inline pull-right" id="language">
+      <option value="text" selected>Select language</option>
+      <option value="javascript">Javascript</option>
+      <option value="coffeescript">CoffeeScript</option>
+      <option value="python">Python</option>
+      <option value="perl">Perl</option>
+      <option value="json">JSON</option>
+      <option value="xml">HTML</option>
+      <option value="css">CSS</option>
+      <option value="sql">SQL</option>
+      <option value="handlebars">Handlebars</option>
+      <option value="http">HTTP</option>
+      <option value="lua">Lua</option>
+      <option value="lisp">Lisp</option>
+    </select>
+
+    <textarea class="span12" rows="20" id="raw"></textarea>
+    <button class="btn btn-large btn-block btn-primary" type="button">Paste</button>
+</template>
+
+<template name="lt">
+  hello
+</template>
+
+<template name="search">
+  {{>nav}}
+  <div class="container">
+    <p>Search results: {{searchResults.count}}</p>
+        {{#each searchResults}}
+          <a href="/snip/{{_id}}">link</a>
+<pre>
+<code class="{{language}}">
+{{raw}}
+</code>
+</pre>
+        {{/each}}
+</div>
+</template>
+
+<template name="snippets">
+  {{>nav}}
+  <div class="container">
+        {{#each snippets}}
+        <a href="/snip/{{_id}}">link</a>
+<pre>
+<code class="{{language}}">
+{{raw}}
+</code>
+</pre>
+        {{/each}}
+</div>
+</template>
+
+<template name="snip">
+  {{>nav}}
+  <div class="container">
+    <div class="input-append pull-right">
+   <input type="text" placeholder="/snip/{{snippet._id}}"/> 
+  <button class="btn" type="button">Share</button>
+</div>
+  <p>{{snippet.language}}</p>
+<br/>
+<pre>
+<code class="{{snippet.language}}">
+{{snippet.raw}}
+</code>
+</pre>
+<!--button class="btn btn-large btn-block btn-primary" type="button">Edit</button-->
+</div>
+
+<div class="cm"></div>
+
+</template>
+
+<template name="not_found">
+  Sorry, I don't know what you are looking for.
+</template>
