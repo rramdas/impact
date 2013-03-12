@@ -1,5 +1,5 @@
-Snippets = new Meteor.Collection('snippets');
-SearchResults = new Meteor.Collection('search_results');
+//Snippets = new Meteor.Collection('snippets');
+// SearchResults = new Meteor.Collection('search_results');
 
 function getHits (hit_id) {
   console.log("getHits: " + hit_id);
@@ -37,6 +37,7 @@ if (Meteor.isClient) {
       var language = template.find("#language").value;
 
       var snippet_id = Snippets.insert({
+        owner: Meteor.userId(),
         raw : raw,
         language : language,
         when: new Date()
@@ -108,6 +109,7 @@ if (Meteor.isClient) {
         });
 
         var hit_id = SearchResults.insert({
+          owner: Meteor.userId(),
           hits : hits_found
         });
 
